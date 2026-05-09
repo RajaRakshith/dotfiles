@@ -1,0 +1,15 @@
+[[keymaps]]
+command = "None"
+key_sequence = "q"
+
+[[keymaps]]
+command = "None"
+key_sequence = "Q"
+
+[[keymaps]]
+command = "Queue"
+key_sequence = "g q"
+
+[[keymaps]]
+command = "Quit"
+key_sequence = "C-q"
