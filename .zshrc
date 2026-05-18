@@ -114,3 +114,6 @@ export PATH="/opt/homebrew/lib/ruby/gems/3.4.4/bin:$PATH"
 # Added by Antigravity
 export PATH="/Users/rakshithraja/.antigravity/antigravity/bin:$PATH"
 
+
+# Created by `pipx` on 2026-05-14 22:35:32
+export PATH="$PATH:/Users/rakshithraja/.local/bin"
