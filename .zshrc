@@ -108,6 +108,8 @@ setopt no_auto_param_keys
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias spotify_player='TERM_PROGRAM=iTerm.app spotify_player'
+
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export PATH="/opt/homebrew/lib/ruby/gems/3.4.4/bin:$PATH"
 

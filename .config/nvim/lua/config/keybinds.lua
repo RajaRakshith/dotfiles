@@ -1,2 +1,10 @@
+local map = vim.keymap.set
+
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>cd", vim.cmd.Ex)
+map("n", "<leader>cd", vim.cmd.Ex)
+map("n", "<leader>w", ":w<CR>", { desc = "Save file" })
+map("n", "<leader>q", ":q<CR>", { desc = "Quit" })
+map("i", "jk", "<Esc>", { desc = "Exit insert mode" })
+
+
+
