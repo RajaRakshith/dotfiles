@@ -1,0 +1,4 @@
+# Shift+Space normally emits modifyOtherKeys \e[27;2;32~, which tmux/CLIs can
+# leak as literal "[27;2;32~" into the input buffer. Send a normal space instead.
+# (\x20 because a bare space after text: gets stripped by the config parser.)
+keybind = shift+space=text:\x20

@@ -107,6 +107,8 @@ main() {
   # Shell / terminal
   link "$DOTFILES/.zshrc"     "$HOME/.zshrc"
   link "$DOTFILES/.tmux.conf" "$HOME/.tmux.conf"
+  link "$DOTFILES/ghostty/config" \
+    "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
 
   # Neovim
   link_nvim

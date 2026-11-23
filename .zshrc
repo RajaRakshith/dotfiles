@@ -119,3 +119,14 @@ export PATH="/Users/rakshithraja/.antigravity/antigravity/bin:$PATH"
 
 # Created by `pipx` on 2026-05-14 22:35:32
 export PATH="$PATH:/Users/rakshithraja/.local/bin"
+
+# opencode
+export PATH=/Users/rakshithraja/.opencode/bin:$PATH
+
+#Java JDC Runtime for Android Apps
+export JAVA_HOME="/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"
+export PATH="$JAVA_HOME/bin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
+
+# Include macOS SDK manual pages
+export MANPATH="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/share/man:$MANPATH"
