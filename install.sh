@@ -31,6 +31,30 @@ link() {
 
 # ── homebrew ───────────────────────────────────────────────────────────────────
 install_brew() {
+  # Never request elevated privileges, even when Homebrew detects sudo.
+  export HOMEBREW_NO_SUDO=1
+  if [ "$platform" = linux ]; then
+    local user_brew="$HOME/.linuxbrew/bin/brew" prefix
+    if [ -x "$user_brew" ]; then
+      eval "$("$user_brew" shellenv)"
+      return
+    fi
+    if command -v brew >/dev/null 2>&1; then
+      prefix="$(brew --prefix)"
+      if [ -w "$prefix" ]; then
+        info "Using writable Homebrew at $prefix"
+        return
+      fi
+      warn "Homebrew at $prefix is not writable; installing a private copy."
+    fi
+    command -v git >/dev/null 2>&1 || error "Git is required to install Homebrew without sudo."
+    command -v curl >/dev/null 2>&1 || error "curl is required to install Homebrew without sudo."
+    [ ! -e "$HOME/.linuxbrew" ] || error "$HOME/.linuxbrew exists but does not contain Homebrew."
+    info "Installing private Homebrew in $HOME/.linuxbrew..."
+    git clone --depth=1 https://github.com/Homebrew/brew "$HOME/.linuxbrew"
+    eval "$("$user_brew" shellenv)"
+    return
+  fi
   if command -v brew &>/dev/null; then
     info "Homebrew already installed"
     return
