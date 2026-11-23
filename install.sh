@@ -14,9 +14,16 @@ error() { echo -e "${RED}[error]${NC} $*"; exit 1; }
 link() {
   local src="$1" dst="$2"
   mkdir -p "$(dirname "$dst")"
-  if [ -e "$dst" ] && [ ! -L "$dst" ]; then
-    warn "Backing up existing $dst → $dst.bak"
-    mv "$dst" "$dst.bak"
+  if [ -L "$dst" ]; then
+    rm "$dst"
+  elif [ -e "$dst" ]; then
+    local backup="$dst.bak" n=1
+    while [ -e "$backup" ] || [ -L "$backup" ]; do
+      backup="$dst.bak.$n"
+      n=$((n + 1))
+    done
+    warn "Backing up existing $dst → $backup"
+    mv "$dst" "$backup"
   fi
   ln -sf "$src" "$dst"
   info "Linked $(basename "$src") → $dst"
@@ -76,14 +83,15 @@ install_zsh_plugins() {
 }
 
 # ── neovim config ──────────────────────────────────────────────────────────────
-# .config/ in this repo is the nvim config root; spotify-player lives inside it.
+# Link the individual Neovim config entries, preserving unrelated files.
 link_nvim() {
   local nvim_dst="$HOME/.config/nvim"
   mkdir -p "$nvim_dst"
 
   for item in init.lua lua lazy-lock.json; do
-    local src="$DOTFILES/.config/$item"
-    [ -e "$src" ] && link "$src" "$nvim_dst/$item"
+    local src="$DOTFILES/.config/nvim/$item"
+    [ -e "$src" ] || error "Missing Neovim config: $src"
+    link "$src" "$nvim_dst/$item"
   done
 }
 
@@ -99,7 +107,10 @@ main() {
 
   brew_install tmux
   brew_install neovim
-  brew_install ruby   # required by .zshrc PATH entries
+  brew_install ruby
+  brew_install ripgrep
+  brew_install spotify-player
+  brew_install openjdk@17
 
   install_omz
   install_zsh_plugins

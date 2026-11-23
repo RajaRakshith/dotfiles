@@ -111,17 +111,19 @@ setopt no_auto_param_keys
 alias spotify_player='TERM_PROGRAM=iTerm.app spotify_player'
 
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-export PATH="/opt/homebrew/lib/ruby/gems/3.4.4/bin:$PATH"
+if command -v ruby >/dev/null 2>&1; then
+  export PATH="$(ruby -e 'puts Gem.bindir'):$PATH"
+fi
 
 # Added by Antigravity
-export PATH="/Users/rakshithraja/.antigravity/antigravity/bin:$PATH"
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
 
 # Created by `pipx` on 2026-05-14 22:35:32
-export PATH="$PATH:/Users/rakshithraja/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"
 
 # opencode
-export PATH=/Users/rakshithraja/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
 
 #Java JDC Runtime for Android Apps
 export JAVA_HOME="/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"
