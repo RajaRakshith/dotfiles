@@ -1,6 +1,14 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
+# Add Homebrew on macOS and Linux before loading shell plugins.
+for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew "$HOME/.linuxbrew/bin/brew"; do
+  if [[ -x "$brew_bin" ]]; then
+    eval "$("$brew_bin" shellenv)"
+    break
+  fi
+done
+
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -110,7 +118,9 @@ setopt no_auto_param_keys
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias spotify_player='TERM_PROGRAM=iTerm.app spotify_player'
 
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+if command -v brew >/dev/null 2>&1; then
+  export PATH="$(brew --prefix)/opt/ruby/bin:$(brew --prefix)/opt/openjdk@17/bin:$PATH"
+fi
 if command -v ruby >/dev/null 2>&1; then
   export PATH="$(ruby -e 'puts Gem.bindir'):$PATH"
 fi
@@ -126,9 +136,11 @@ export PATH="$PATH:$HOME/.local/bin"
 export PATH="$HOME/.opencode/bin:$PATH"
 
 #Java JDC Runtime for Android Apps
-export JAVA_HOME="/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"
-export PATH="$JAVA_HOME/bin:$PATH"
-export PATH="/opt/homebrew/bin:$PATH"
+if [[ -d /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home ]]; then
+  export JAVA_HOME="/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"
+fi
 
 # Include macOS SDK manual pages
-export MANPATH="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/share/man:$MANPATH"
+if [[ -d /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/share/man ]]; then
+  export MANPATH="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/share/man:${MANPATH:-}"
+fi
